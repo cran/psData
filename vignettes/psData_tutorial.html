@@ -3,7 +3,19 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-<title></title>
+<title>psData Motivation and Tutorial</title>
+
+<script type="text/javascript">
+window.onload = function() {
+  var imgs = document.getElementsByTagName('img'), i, img;
+  for (i = 0; i < imgs.length; i++) {
+    img = imgs[i];
+    // center an image if it is the only element of its parent
+    if (img.parentElement.childElementCount === 1)
+      img.parentElement.style.textAlign = 'center';
+  }
+};
+</script>
 
 <!-- Styles for R syntax highlighter -->
 <style type="text/css">
@@ -45,9 +57,6 @@ var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/<
 hljs.initHighlightingOnLoad();
 </script>
 
-<!-- MathJax scripts -->
-<script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
 
 
 <style type="text/css">
@@ -60,6 +69,7 @@ body, td {
 body {
   max-width: 800px;
   margin: auto;
+  padding: 1em;
   line-height: 20px;
 }
 
@@ -67,28 +77,28 @@ tt, code, pre {
    font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
 }
 
-h1 { 
-   font-size:2.2em; 
+h1 {
+   font-size:2.2em;
 }
 
-h2 { 
-   font-size:1.8em; 
+h2 {
+   font-size:1.8em;
 }
 
-h3 { 
-   font-size:1.4em; 
+h3 {
+   font-size:1.4em;
 }
 
-h4 { 
-   font-size:1.0em; 
+h4 {
+   font-size:1.0em;
 }
 
-h5 { 
-   font-size:0.9em; 
+h5 {
+   font-size:0.9em;
 }
 
-h6 { 
-   font-size:0.8em; 
+h6 {
+   font-size:0.8em;
 }
 
 a:visited {
@@ -98,7 +108,9 @@ a:visited {
 pre, img {
   max-width: 100%;
 }
-
+pre {
+  overflow-x: auto;
+}
 pre code {
    display: block; padding: 0.5em;
 }
@@ -132,54 +144,54 @@ hr {
 }
 
 @media print {
-   * { 
-      background: transparent !important; 
-      color: black !important; 
-      filter:none !important; 
-      -ms-filter: none !important; 
+   * {
+      background: transparent !important;
+      color: black !important;
+      filter:none !important;
+      -ms-filter: none !important;
    }
 
-   body { 
-      font-size:12pt; 
-      max-width:100%; 
-   }
-       
-   a, a:visited { 
-      text-decoration: underline; 
+   body {
+      font-size:12pt;
+      max-width:100%;
    }
 
-   hr { 
+   a, a:visited {
+      text-decoration: underline;
+   }
+
+   hr {
       visibility: hidden;
       page-break-before: always;
    }
 
-   pre, blockquote { 
-      padding-right: 1em; 
-      page-break-inside: avoid; 
+   pre, blockquote {
+      padding-right: 1em;
+      page-break-inside: avoid;
    }
 
-   tr, img { 
-      page-break-inside: avoid; 
+   tr, img {
+      page-break-inside: avoid;
    }
 
-   img { 
-      max-width: 100% !important; 
+   img {
+      max-width: 100% !important;
    }
 
-   @page :left { 
-      margin: 15mm 20mm 15mm 10mm; 
-   }
-     
-   @page :right { 
-      margin: 15mm 10mm 15mm 20mm; 
+   @page :left {
+      margin: 15mm 20mm 15mm 10mm;
    }
 
-   p, h2, h3 { 
-      orphans: 3; widows: 3; 
+   @page :right {
+      margin: 15mm 10mm 15mm 20mm;
    }
 
-   h2, h3 { 
-      page-break-after: avoid; 
+   p, h2, h3 {
+      orphans: 3; widows: 3;
+   }
+
+   h2, h3 {
+      page-break-after: avoid;
    }
 }
 </style>
@@ -194,11 +206,9 @@ hr {
 %\VignetteIndexEntry{psData Markdown Vignette made with knitr}
 -->
 
-<p>psData Motivation and Tutorial</p>
+<h1>psData Motivation and Tutorial</h1>
 
-<h1></h1>
-
-<p>A lot of progress has been made on improving political scientists&#39; ability to access data &#39;programmatically&#39;, e.g. data can be downloaded with source code R. Packages such as <a href="http://cran.r-project.org/web/packages/WDI/index.html">WDI</a> for World Bank Development Indicator and <a href="http://cran.r-project.org/web/packages/dvn/index.html">dvn</a> for many data sets stored on the <a href="http://thedata.org/">Dataverse Network</a> make it much easier for political scientists to use this data as part of a highly <a href="http://christophergandrud.blogspot.de/2013/07/getting-started-with-reproducible.html">integrated and reproducible workflow</a>. </p>
+<p>A lot of progress has been made on improving political scientists&#39; ability to access data &#39;programmatically&#39;, e.g. data can be downloaded with source code R. Packages such as <a href="http://cran.r-project.org/package=WDI">WDI</a> for World Bank Development Indicator and <a href="http://cran.r-project.org/package=dvn">dvn</a> for many data sets stored on the <a href="http://thedata.org/">Dataverse Network</a> make it much easier for political scientists to use this data as part of a highly <a href="http://christophergandrud.blogspot.de/2013/07/getting-started-with-reproducible.html">integrated and reproducible workflow</a>. </p>
 
 <p>There are nonetheless still many commonly used political science data sets that aren&#39;t easily accessible to researchers. Recently, I&#39;ve been using the <a href="http://econ.worldbank.org/WBSITE/EXTERNAL/EXTDEC/EXTRESEARCH/0,,contentMDK:20649465%7EpagePK:64214825%7EpiPK:64214943%7EtheSitePK:469382,00.html">Database of Political Institutions (DPI)</a>, <a href="http://www.systemicpeace.org/polity/polity4.htm">Polity IV</a> democracy indicators, and <a href="http://www.carmenreinhart.com/data/browse-by-topic/topics/7/">Reinhart and Rogoff&#39;s (2010)</a> financial crisis occurrence data. All three of these data sets are freely available for download online. However, getting them, cleaning them up, and merging them together is kind of a pain. This is especially true for the Reinhart and Rogoff data, which is in 4 Excel files with over 70 individual sheets, one for each country&#39;s data. </p>
 
@@ -227,7 +237,7 @@ hr {
 library(psData)
 
 # Download polity2 variable
-PolityData &lt;- PolityGet(vars = &quot;polity2&quot;)
+PolityData &lt;- PolityGet(vars = &#39;polity2&#39;)
 </code></pre>
 
 <p>Note that the <strong>iso2c</strong> variable refers to the <a href="http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO two letter country code country ID</a>. This standardised country identifier could be used to easily merge the Polity IV data with another data set. Another country ID type can be selected with the <code>OutCountryID</code> argument. See the package documentation for details.</p>
@@ -241,7 +251,7 @@ PolityData &lt;- PolityGet(vars = &quot;polity2&quot;)
 
 <h2>Install</h2>
 
-<p><em>psData</em> should be on <a href="http://cran.r-project.org/">CRAN</a> soon, but while it is in the development stage you can install it with the <a href="https://github.com/hadley/devtools">devtools</a> package:</p>
+<p><em>psData</em> is on <a href="http://cran.r-project.org/package=psData">CRAN</a>. You can also download the development version with the <a href="https://github.com/hadley/devtools">devtools</a> package:</p>
 
 <pre><code>devtools::install_github(&#39;psData&#39;, &#39;christophergandrud&#39;)
 </code></pre>
